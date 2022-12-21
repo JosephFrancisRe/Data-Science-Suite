@@ -19,6 +19,7 @@ import threading
 # User Interface Imports
 import customtkinter
 from tkinter import ttk
+from pandastable import Table, TableModel
 
 # Internal Imports
 import config
@@ -149,6 +150,14 @@ def create_dataset(process, timeline) -> pd.DataFrame:
 
 def set_initial_configurations(process):
     print('Entered set_initial_configurations')
+    process.required_qualification = config.required_qualification
+    process.observation_unique_ID = config.observation_unique_ID
+    process.target_variable_name = config.target_variable_name
+    process.predicator_variable_num = config.predicator_variable_num
+    process.simulations = config.simulations
+    process.active_library = config.active_library
+    process.start_year = config.start_year
+    process.end_year = config.end_year
     select_library(process.active_library)
     if not process.true_randomness:
         process.seed = 0
@@ -310,9 +319,6 @@ def process_request(process):
     
     complete_process(process)
     
-    
-    
-    
 
 customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('dark-blue')
@@ -320,25 +326,47 @@ customtkinter.set_default_color_theme('dark-blue')
 root = customtkinter.CTk()
 root.minsize(640, 480)
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-root.geometry('1080x720x0x0')
+root.geometry('1920x1080x0x0')
 #root.geometry("%dx%d-8-1" % (w, h))
 #root.state('zoomed')
 root.iconbitmap(os.path.dirname(os.path.abspath(__file__)) + '\\images\\favicon.ico')
 root.title('Data Science Suite')
+root.rowconfigure((0,1,2), weight=1)
+root.columnconfigure((0,1,2,3,4,5), weight=1)
+'''
+
+X
+X
+X
+X
+
+'''
+
 
 frame = customtkinter.CTkFrame(master=root)
-frame.pack(pady = 20, padx = 60, fill = 'both', expand = True)
+frame.grid(row=0, column=1, columnspan=3, sticky='nsew')
+frame.grid_columnconfigure((1,2,3), weight=1)
+frame.grid_rowconfigure((0, 1, 2), weight=0)
 
 label1 = customtkinter.CTkLabel(master=frame, text='Data Science Suite', font=('Roboto', 78))
-label1.pack(pady=12, padx=10)
+label1.grid(row=3, column=0, columnspan=3, pady=0, padx=10)
 
 label2 = customtkinter.CTkLabel(master=frame, text='A Machine Learning Tool\nby Joseph Re', font=('Roboto', 24))
-label2.pack(pady=12, padx=10)
+label2.grid(row=4, column=0, columnspan=3, pady=12, padx=10)
 
 
 
 def process_request_thread():
-    print('Entered process_request_thread')
+    def set_settings():
+        config.required_qualification = int(entry1.get())
+        config.observation_unique_ID = entry2.get()
+        config.target_variable_name = entry3.get()
+        config.predicator_variable_num = int(entry4.get())
+        config.simulations = int(entry5.get())
+        config.active_library = int(entry6.get())
+        config.start_year = int(entry7.get())
+        config.end_year = int(entry8.get())
+    set_settings()
     global process_request_thread
     process_request_thread = threading.Thread(target=begin_process)
     process_request_thread.daemon = True
@@ -367,26 +395,59 @@ def update_progress_label():
     return f"Current Progress: {int(pb['value'])}%"
 
 
+entry1 = customtkinter.CTkEntry(master=frame, placeholder_text='Required Qualification')
+entry1.grid(row=5, column=0, pady=12, padx=10)
+entry1.insert(0, '550')
+
+entry2 = customtkinter.CTkEntry(master=frame, placeholder_text='Observation Unique ID')
+entry2.grid(row=5, column=1, pady=12, padx=10)
+entry2.insert(0, 'IDfg')
+
+entry3 = customtkinter.CTkEntry(master=frame, placeholder_text='Target Variable Name')
+entry3.grid(row=5, column=2, pady=12, padx=10)
+entry3.insert(0, 'HR')
+
+entry4 = customtkinter.CTkEntry(master=frame, placeholder_text='Predicator Variable Num')
+entry4.grid(row=6, column=0, pady=12, padx=10)
+entry4.insert(0, '5')
+
+entry5 = customtkinter.CTkEntry(master=frame, placeholder_text='Simulations')
+entry5.grid(row=6, column=1, pady=12, padx=10)
+entry5.insert(0, '1')
+
+entry6 = customtkinter.CTkEntry(master=frame, placeholder_text='Active Library')
+entry6.grid(row=6, column=2, pady=12, padx=10)
+entry6.insert(0, '1')
+
+entry7 = customtkinter.CTkEntry(master=frame, placeholder_text='Start Year')
+entry7.grid(row=7, column=0, pady=12, padx=10)
+entry7.insert(0, '2015')
+
+entry8 = customtkinter.CTkEntry(master=frame, placeholder_text='End Year')
+entry8.grid(row=7, column=1, pady=12, padx=10)
+entry8.insert(0, '2022')
+
+button = customtkinter.CTkButton(master=frame, text='Load Data', command=process_request_thread)
+button.grid(row=7, column=1, pady=12, padx=10, sticky='nsew')
+
+button = customtkinter.CTkButton(master=frame, text='Start Processing', command=process_request_thread)
+button.grid(row=7, column=2, pady=12, padx=10, sticky='nsew')
+
 # progressbar
 pb = ttk.Progressbar(master=frame, orient='horizontal', mode='determinate', length=280)
 
 # place the progressbar
-pb.pack(padx=10, pady=20)
+pb.grid(row=8, column=1, columnspan=2, padx=10, pady=20)
 
 # label
 value_label = ttk.Label(master=frame, text=update_progress_label())
-value_label.pack(pady=12, padx=10)
+value_label.grid(row=8, column=0, columnspan=2, pady=0, padx=0)
 
-entry1 = customtkinter.CTkEntry(master=frame, placeholder_text='Input 1')
-entry1.pack(pady=12, padx=10)
-
-entry2 = customtkinter.CTkEntry(master=frame, placeholder_text='Input 2')
-entry2.pack(pady=12, padx=10)
-
-button = customtkinter.CTkButton(master=frame, text='Start Processing', command=process_request_thread)
-button.pack(pady=12, padx=10)
-
-checkbox = customtkinter.CTkCheckBox(master=frame, text='Remember Me')
-checkbox.pack(pady=12, padx=10)
+# table model
+frame.grid(row=1, column=0, rowspan=8, pady=0, padx=0)
+df = config.batting_stats(2022, 2022, qual = 550)
+#TableModel.getSampleData()
+table = Table(frame, dataframe=df, showtoolbar=False, showstatusbar=False)
+table.show()
 
 root.mainloop()
