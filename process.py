@@ -3,21 +3,22 @@
 @author: JosephRe
 """
 
-import printfunctions as pf
+import print_functions as pf
 import time
 
+import config
 
 class Process:
     def __init__(self):
         # Settings
-        self.__required_qualification = 550
-        self.__observation_unique_ID = 'IDfg'
-        self.__target_variable_name = 'HR'
-        self.__predicator_variable_num = 5
-        self.__simulations = 1
-        self.__active_library = 1
-        self.__start_year = 2015
-        self.__end_year = 2022
+        self.__required_qualification = config.required_qualification
+        self.__observation_unique_ID = config.observation_unique_ID
+        self.__target_variable_name = config.target_variable_name
+        self.__predictor_variable_num = config.predictor_variable_num
+        self.__simulations = config.simulations
+        self.__active_library = config.active_library
+        self.__start_year = config.start_year
+        self.__end_year = config.end_year
         self.__true_randomness = True
         self.__seed = None
 
@@ -34,7 +35,7 @@ class Process:
         self.__pre_feature_selection_dataset_current = None
 
         # Dataset Statistics
-        self.__variance = None
+        self.__variance_past = None
         self.__variance_current = None
         self.__correlation_past = None
         self.__correlation_current = None
