@@ -122,25 +122,25 @@ def setIndependentAndDependentVariable(dataset, y, X) -> pd.DataFrame:
     return dataset[dataset.columns.intersection(intersectionString.split(" "))]
 
 
-def createIndexListFromDataFrame(dataframe, columnName) -> []:
+def createIndexListFromDataFrame(dataframe, columnName):
     res = dataframe.index.tolist()
     # del res[res.index(columnName)]
     return res
 
 
-def createColumnListFromDataFrame(dataframe, indicesList, columnName) -> []:
+def createColumnListFromDataFrame(dataframe, indicesList, columnName):
     index_to_remove = indicesList.index(columnName)
     res = dataframe.loc[dataframe.columns[index_to_remove]].tolist()
     del res[index_to_remove]
     return res
 
 
-def removeIndependentVariableFromList(list1, columnName) -> []:
+def removeIndependentVariableFromList(list1, columnName):
     del list1[list1.index(columnName)]
     return list1
 
 
-def combineListsIntoDictionary(list1, list2) -> {}:
+def combineListsIntoDictionary(list1, list2):
     return { list1[i] : list2[i] for i in range(len(list1)) }
 
 
@@ -149,11 +149,11 @@ def combineListsIntoDataFrame(list1, list2) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-def reverseDictionaryKeyValuePair(dictionary) -> []:
+def reverseDictionaryKeyValuePair(dictionary):
     return {v: k for k, v in dictionary.items()} 
 
 
-def select_predictor_variables(process) -> []:
+def select_predictor_variables(process):
     feature_list = createIndexListFromDataFrame(process.correlation_past, process.target_variable_name)
     value_list = createColumnListFromDataFrame(process.correlation_past, feature_list, process.target_variable_name)
     correlations_sorted = zip(value_list, feature_list)

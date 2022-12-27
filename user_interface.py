@@ -98,8 +98,8 @@ class UserInterface:
 
 
     def set_load_settings(self):
-        print(f'process active library = {int(self.active_library_entry["text"])}')
-        self.process.active_library = config.active_library = int(self.active_library_entry.cget())
+        print(f'process active library = {int(self.active_library_entry.get())}')
+        self.process.active_library = config.active_library = int(self.active_library_entry.get())
 
 
     def create_load_module(self):
@@ -141,14 +141,14 @@ class UserInterface:
 
 
     def set_process_settings(self):
-        print(f'Required qual = {int(self.required_qualification_label["text"])}\nObservation_unique is = {self.observation_unique_ID_entry["text"]}\nprocess target variable = {self.target_variable_name_entry["text"]}\npredictor variable num = {int(self.predictor_variable_num_entry["text"])}\nsimulations = {int(self.simulations_entry["text"])}\nend year = {int(self.end_year_entry["text"])}')
-        self.process.required_qualification = config.required_qualification = int(self.required_qualification_label["text"])
-        self.process.observation_unique_ID = config.observation_unique_ID = self.observation_unique_ID_entry["text"]
-        self.process.target_variable_name = config.target_variable_name = self.target_variable_name_entry["text"]
-        self.process.predictor_variable_num = config.predictor_variable_num = int(self.predictor_variable_num_entry["text"])
-        self.process.simulations = config.simulations = int(self.simulations_entry["text"])
-        self.process.start_year = config.start_year = int(self.start_year_entry["text"])
-        self.process.end_year = config.end_year = int(self.end_year_entry["text"])
+        print(f'Required qual = {int(self.required_qualification_label.get())}\nObservation_unique is = {self.observation_unique_ID_entry.get()}\nprocess target variable = {self.target_variable_name_entry.get()}\npredictor variable num = {int(self.predictor_variable_num_entry.get())}\nsimulations = {int(self.simulations_entry.get())}\nend year = {int(self.end_year_entry.get())}')
+        self.process.required_qualification = config.required_qualification = int(self.required_qualification_label.get())
+        self.process.observation_unique_ID = config.observation_unique_ID = self.observation_unique_ID_entry.get()
+        self.process.target_variable_name = config.target_variable_name = self.target_variable_name_entry.get()
+        self.process.predictor_variable_num = config.predictor_variable_num = int(self.predictor_variable_num_entry.get())
+        self.process.simulations = config.simulations = int(self.simulations_entry.get())
+        self.process.start_year = config.start_year = int(self.start_year_entry.get())
+        self.process.end_year = config.end_year = int(self.end_year_entry.get())
 
 
     def create_process_module(self):
