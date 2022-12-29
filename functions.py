@@ -110,6 +110,17 @@ def removeFeaturesWithNan(dataset) -> pd.DataFrame:
 
 
 def sanitize_dataset(dataset) -> pd.DataFrame:
+    '''
+    Performs basic numerical sanitization of a dataset (i.e., removes non-numerical and Nan values).
+
+    Parameters
+    ----------
+    dataset: Any pd.DataFrame
+
+    Returns
+    -------
+    Returns a pd.DataFrame that contains neither Nan or non-numerical values
+    '''
     dataset = removeNonNumericalFeatures(dataset)
     return removeFeaturesWithNan(dataset)
 
