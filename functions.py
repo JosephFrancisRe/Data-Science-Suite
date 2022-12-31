@@ -165,6 +165,17 @@ def reverseDictionaryKeyValuePair(dictionary):
 
 
 def select_predictor_variables(process):
+    '''
+    Selects predictor variables based on the independent variables that have the highest correlation to the dependent variable.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value. The function simple updates the value of the chosen predictor variables based on the highest correlations.
+    '''
     feature_list = createIndexListFromDataFrame(process.correlation_past, process.target_variable_name)
     value_list = createColumnListFromDataFrame(process.correlation_past, feature_list, process.target_variable_name)
     correlations_sorted = zip(value_list, feature_list)
