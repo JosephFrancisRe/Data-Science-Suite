@@ -187,7 +187,17 @@ def select_predictor_variables(process):
 
 
 def set_features_and_target(process):
-    # Set features and target
+    '''
+    Reduces a process' dataset to only include the independent and dependent variables values.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value. The function simple updates the values of the dataframe objects inside a provided process object.
+    '''
     process.dataset_past = setIndependentAndDependentVariable(process.dataset_past, process.target_variable_name, process.predictor_variable_names)
     process.dataset_current = setIndependentAndDependentVariable(process.dataset_current, process.target_variable_name, process.predictor_variable_names)
 
