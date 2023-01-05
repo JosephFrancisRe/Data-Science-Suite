@@ -196,14 +196,24 @@ def set_features_and_target(process):
 
     Returns
     -------
-    No return value. The function simple updates the values of the dataframe objects inside a provided process object.
+    No return value. The function simply updates the values of the dataframe objects inside a provided process object.
     '''
     process.dataset_past = setIndependentAndDependentVariable(process.dataset_past, process.target_variable_name, process.predictor_variable_names)
     process.dataset_current = setIndependentAndDependentVariable(process.dataset_current, process.target_variable_name, process.predictor_variable_names)
 
 
 def create_past_dataframes(process):
-    # Past: Split the dataset into training and testing dataframes
+    '''
+    Creates a DataFrame to be used as the testing sets.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value. The function simply splits the past DataFrame into training and testing datasets for a given process.
+    '''
     for i in range(process.simulations):
         X_train, X_test, y_train, y_test = train_test_split(process.dataset_past.loc[:, process.dataset_past.columns != process.target_variable_name], process.dataset_past.loc[:, process.dataset_past.columns == process.target_variable_name], random_state = process.seed)
         process.X_trains.append(X_train)
