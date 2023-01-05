@@ -223,7 +223,17 @@ def create_past_dataframes(process):
 
 
 def create_current_testing_dataframes(process):
-    # Current: Split the dataset into testing dataframes
+    '''
+    Creates a DataFrame to be used as the testing sets for the current period.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value. The function simply splits the past DataFrame into testing datasets for a given process.
+    '''
     for i in range(process.simulations):
         process.X_test_current = process.dataset_current.loc[:, process.dataset_current.columns != process.target_variable_name]
         process.y_test_current = process.dataset_current.loc[:, process.dataset_current.columns == process.target_variable_name]
