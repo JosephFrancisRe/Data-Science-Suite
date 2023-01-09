@@ -333,7 +333,17 @@ def begin_process(process):
 
 
 def evaluate_results(process):
-    # Evaluate results
+    '''
+    Performs calculations on a process to determine their r squared, mean accuracy, and other statistics.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value.
+    '''
     calculate_r2(process)
     set_mean_accuracy(process)
     calculate_advanced_statistics(process)
