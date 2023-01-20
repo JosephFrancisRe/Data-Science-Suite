@@ -318,6 +318,17 @@ def understand_data(process):
 
 
 def begin_process(process):
+    '''
+    Performs the operations on a process from data sanitization to process completion.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value.
+    '''
     sanitize_datasets(process)
     increment_operation()
     understand_data(process)
