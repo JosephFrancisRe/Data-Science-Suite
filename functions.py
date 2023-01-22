@@ -309,6 +309,17 @@ def complete_process(process):
 
 
 def understand_data(process):
+    '''
+    Performs the operations on a process that interprets the data. The operations include the creation of variance and correlation figures, as well as the selection of independent variables.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value.
+    '''
     calculate_variance(process)
     calculate_correlation(process)
     select_predictor_variables(process)
