@@ -250,6 +250,17 @@ def create_linear_regression(process):
 
 
 def make_predictions(process):
+    '''
+    Performs predictions on a process for each simulation.
+
+    Parameters
+    ----------
+    process: Any process object
+
+    Returns
+    -------
+    No return value.
+    '''
     # Create simulations number of predictions for current
     for i in range(process.simulations):
         y_pred = process.lr.predict(process.X_tests_current[i].values)
