@@ -15,6 +15,7 @@ operations = 0
 total_operations = 205
 completion_percentage = 0
 
+current_output_line_num = 1.0
 required_qualification = 0
 observation_unique_ID = ''
 target_variable_name = ''
