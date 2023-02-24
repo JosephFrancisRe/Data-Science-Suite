@@ -61,9 +61,9 @@ class UserInterface:
 
         # Output Module
         self.output_module = customtkinter.CTkFrame(master=self.root)
-        self.output_module_title_label = customtkinter.CTkLabel(master=self.output_module, text='Output Module:', font=('Roboto', 78))
+        self.output_module_title_label = customtkinter.CTkLabel(master=self.output_module, text='Output Module:', font=('Roboto', 24))
         self.outputText = scrolledtext.ScrolledText(self.output_module)
-        self.outputText.grid(row = 1, column = 0, rowspan=35, columnspan = 4)
+        self.outputText.grid(row=1, column=0, rowspan=35, columnspan=4)
 
         # Dataset Module
         self.table = None
@@ -81,7 +81,7 @@ class UserInterface:
 
 
     def create_root_frame(self):
-        # Root
+        # Root Frame
         root = customtkinter.CTk()
         root.minsize(1580, 720)
         w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -158,12 +158,7 @@ class UserInterface:
 
 
     def set_process_settings(self):
-        self.outputText.insert(config.current_output_line_num, "Required Qualifications = " + self.required_qualification_entry.get() + "\n")
-        self.outputText.insert(config.current_output_line_num, "Observation Unique ID = " + self.observation_unique_ID_entry.get() + "\n")
-        self.outputText.insert(config.current_output_line_num, "Process Target Variable = " + self.target_variable_name_entry.get() + "\n")
-        self.outputText.insert(config.current_output_line_num, "Predictor Variable Number = " + self.predictor_variable_num_entry.get() + "\n")
-        self.outputText.insert(config.current_output_line_num, "Simulations = " + self.simulations_entry.get() + "\n")
-        self.outputText.insert(config.current_output_line_num, "End Year = " + self.end_year_entry.get() + "\n")
+        # Set Process Values Based on Entries
         self.process.required_qualification = config.required_qualification = int(self.required_qualification_entry.get())
         self.process.observation_unique_ID = config.observation_unique_ID = self.observation_unique_ID_entry.get()
         self.process.target_variable_name = config.target_variable_name = self.target_variable_name_entry.get()
@@ -172,38 +167,64 @@ class UserInterface:
         self.process.start_year = config.start_year = int(self.start_year_entry.get())
         self.process.end_year = config.end_year = int(self.end_year_entry.get())
 
+        # Output Process Settings
+        self.outputText.insert(config.current_output_line_num, "Required Qualifications = " + str(config.required_qualification) + "\n")
+        self.outputText.insert(config.current_output_line_num, "Observation Unique ID = " + str(config.observation_unique_ID) + "\n")
+        self.outputText.insert(config.current_output_line_num, "Process Target Variable = " + str(config.target_variable_name) + "\n")
+        self.outputText.insert(config.current_output_line_num, "Predictor Variable Number = " + str(config.predictor_variable_num) + "\n")
+        self.outputText.insert(config.current_output_line_num, "Simulations = " + str(config.simulations) + "\n")
+        self.outputText.insert(config.current_output_line_num, "End Year = " + str(config.end_year) + "\n")
+
 
     def create_process_module(self):
-        # Process Module
+        # Process Module Grid Configurations
         self.process_module.grid(row=1, column=0, sticky='nsew')
         self.process_module.grid_columnconfigure(4, weight=1)
         self.process_module.grid_rowconfigure(0, weight=0)
+
+        # Required Qualifications
         self.process_module_required_qualification_label.grid(row=5, column=0, padx=10)
         self.required_qualification_entry.grid(row=5, column=1, pady=12, padx=10)
         self.required_qualification_entry.insert(0, '550')
+
+        # Observation Unique ID
         self.process_module_observation_unique_ID_label.grid(row=5, column=3, padx=10)
         self.observation_unique_ID_entry.grid(row=5, column=4, pady=12, padx=10)
         self.observation_unique_ID_entry.insert(0, 'IDfg')
+
+        # Target Variable Name
         self.process_module_target_variable_name_label.grid(row=6, column=0, padx=10)
         self.target_variable_name_entry.grid(row=6, column=1, pady=12, padx=10)
         self.target_variable_name_entry.insert(0, 'HR')
+
+        # Predictor Variable Number
         self.process_module_predictor_variable_num_label.grid(row=6, column=3, padx=10)
         self.predictor_variable_num_entry.grid(row=6, column=4, pady=12, padx=10)
         self.predictor_variable_num_entry.insert(0, '5')
+
+        # Simulations
         self.process_module_simulations_label.grid(row=7, column=0, padx=10)
         self.simulations_entry.grid(row=7, column=1, pady=12, padx=10)
         self.simulations_entry.insert(0, '1')
+
+        # Start Year
         self.process_module_start_year_label.grid(row=7, column=3, padx=10)
         self.start_year_entry.grid(row=7, column=4, pady=12, padx=10)
         self.start_year_entry.insert(0, '2015')
+
+        # End Year
         self.process_module_end_year_label.grid(row=8, column=0, padx=10)
         self.end_year_entry.grid(row=8, column=1, pady=12, padx=10)
         self.end_year_entry.insert(0, '2022')
+
+        # Button and Progress Bar
         self.processing_button.grid(row=8, column=3, columnspan=2, pady=12, padx=10, sticky='nsew')
         self.process_module_pb.grid(row=9, column=1, columnspan=3, padx=0, pady=0)
         self.process_module_pb_label.grid(row=9, column=1, columnspan=3, pady=0, padx=0)
+
         self.set_process_settings()
         return self.process_module
+
 
     def create_output_module(self):
         # Output Module
@@ -212,7 +233,7 @@ class UserInterface:
 
 
     def create_dataset_module(self):
-        # table model
+        # Table Model
         self.dataset_module = customtkinter.CTkFrame(master=self.root)
         self.dataset_module.grid(row=0, column=1, rowspan=3, pady=0, padx=0, sticky='nsew')
         self.table = Table(self.dataset_module, dataframe=pybaseball.batting_stats(2015, 2022, qual=550), width=300, maxcellwidth=1500, showtoolbar=True, showstatusbar=True)
@@ -233,7 +254,7 @@ class UserInterface:
         self.outputText.insert(config.current_output_line_num, "Adjusting column widths" + "\n")
         self.table.redraw()
         self.outputText.insert(config.current_output_line_num, "Showing table in module" + "\n")
-        self.outputText.insert(config.current_output_line_num, "Finished" + "\n")
+        self.outputText.insert(config.current_output_line_num, "Finished updating the table operations" + "\n")
 
 
 ui = UserInterface()
