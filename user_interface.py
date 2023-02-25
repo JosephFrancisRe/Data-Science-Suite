@@ -63,7 +63,8 @@ class UserInterface:
         self.output_module = customtkinter.CTkFrame(master=self.root)
         self.output_module_title_label = customtkinter.CTkLabel(master=self.output_module, text='Output Module:', font=('Roboto', 24))
         self.outputText = scrolledtext.ScrolledText(self.output_module)
-        self.outputText.grid(row=1, column=0)
+        self.outputText.config(state='disabled')
+        self.outputText.grid(row=1, column=0, columnspan=4, sticky='nsew')
 
         # Dataset Module
         self.table = None
@@ -76,7 +77,7 @@ class UserInterface:
         self.create_output_module()
         self.dataset_module = self.create_dataset_module()
 
-        # Set Config Values
+        # Set Config
         config.ui = self
 
 
@@ -115,7 +116,9 @@ class UserInterface:
 
 
     def set_load_settings(self):
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Process Active Library Number = " + self.active_library_entry.get() + "\n")
+        self.outputText.config(state='disabled')
         self.process.active_library = config.active_library = int(self.active_library_entry.get())
 
 
@@ -168,12 +171,14 @@ class UserInterface:
         self.process.end_year = config.end_year = int(self.end_year_entry.get())
 
         # Output Process Settings
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Required Qualifications = " + str(config.required_qualification) + "\n")
         self.outputText.insert(config.current_output_line_num, "Observation Unique ID = " + str(config.observation_unique_ID) + "\n")
         self.outputText.insert(config.current_output_line_num, "Process Target Variable = " + str(config.target_variable_name) + "\n")
         self.outputText.insert(config.current_output_line_num, "Predictor Variable Number = " + str(config.predictor_variable_num) + "\n")
         self.outputText.insert(config.current_output_line_num, "Simulations = " + str(config.simulations) + "\n")
         self.outputText.insert(config.current_output_line_num, "End Year = " + str(config.end_year) + "\n")
+        self.outputText.config(state='disabled')
 
 
     def create_process_module(self):
@@ -249,12 +254,20 @@ class UserInterface:
         self.dataset_module = customtkinter.CTkFrame(master=self.root)
         self.dataset_module.grid(row=0, column=1, rowspan=3, pady=0, padx=0, sticky='nsew')
         self.table = Table(self.dataset_module, dataframe=self.process.dataset_past, width=300, maxcellwidth=1500, showtoolbar=True, showstatusbar=True)
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Creating table" + "\n")
+        self.outputText.config(state='disabled')
         self.table.adjustColumnWidths()
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Adjusting column widths" + "\n")
+        self.outputText.config(state='disabled')
         self.table.redraw()
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Showing table in module" + "\n")
+        self.outputText.config(state='disabled')
+        self.outputText.config(state='normal')
         self.outputText.insert(config.current_output_line_num, "Finished updating the table operations" + "\n")
+        self.outputText.config(state='disabled')
 
 
 ui = UserInterface()
