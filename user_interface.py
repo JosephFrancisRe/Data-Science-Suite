@@ -63,7 +63,7 @@ class UserInterface:
         self.output_module = customtkinter.CTkFrame(master=self.root)
         self.output_module_title_label = customtkinter.CTkLabel(master=self.output_module, text='Output Module:', font=('Roboto', 24))
         self.outputText = scrolledtext.ScrolledText(self.output_module)
-        self.outputText.grid(row=1, column=0, rowspan=35, columnspan=4)
+        self.outputText.grid(row=1, column=0)
 
         # Dataset Module
         self.table = None
@@ -83,7 +83,7 @@ class UserInterface:
     def create_root_frame(self):
         # Root Frame
         root = customtkinter.CTk()
-        root.minsize(1580, 720)
+        root.minsize(1580, 980)
         w, h = root.winfo_screenwidth(), root.winfo_screenheight()
         root.geometry('1920x1080x0x0')
         root.geometry("%dx%d-8-1" % (w, h))
@@ -229,7 +229,7 @@ class UserInterface:
     def create_output_module(self):
         # Output Module
         self.output_module.grid(row=2, column=0, sticky='nsew')
-        self.output_module_title_label.grid(row=0, column=0, columnspan=3, pady=12, padx=30)
+        self.output_module_title_label.grid(row=0, column=0, pady=12, padx=30)
 
 
     def create_dataset_module(self):
